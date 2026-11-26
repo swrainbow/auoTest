@@ -1,0 +1,20 @@
+{
+  "name": "ai-testing-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "基于 TesterArmy/e2e 的 AI 业务自动化测试平台（单机本地版）",
+  "packageManager": "pnpm@12.11.2",
+  "engines": {
+    "node": ">=24.8.0"
+  },
+  "scripts": {
+    "dev": "pnpm --parallel --stream --filter @autotest/api --filter @autotest/web run dev",
+    "dev:api": "pnpm --filter @autotest/api run dev",
+    "dev:web": "pnpm --filter @autotest/web run dev",
+    "build": "pnpm -r run build",
+    "start": "pnpm --filter @autotest/api run start --serve-web",
+    "db:setup": "pnpm --filter @autotest/api run db:setup",
+    "typecheck": "pnpm --filter @autotest/web typecheck",
+    "browser:install": "pnpm --filter e2e-project exec e2e-web install chromium"
+  }
+}

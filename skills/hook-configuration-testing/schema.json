@@ -1,0 +1,27 @@
+{
+  "scope": "本地演示。正式业务由对应 Skill Schema 和业务上下文接口提供。",
+  "path": "/demo/task.html",
+  "taskId": "task-e2e-001",
+  "testIds": {
+    "graph": "task-graph",
+    "node": "move-002",
+    "panel": "node-panel",
+    "validation": "validation-hook",
+    "validationSummary": "hook-summary",
+    "addValidation": "add-validation",
+    "cargo": "cargo-state",
+    "lock": "lock-state",
+    "save": "save-task",
+    "status": "save-status"
+  },
+  "lifecycle": "创建时",
+  "hook": "校验",
+  "values": {
+    "none": "none",
+    "enabled": "enabled"
+  },
+  "labels": {
+    "none": "不校验",
+    "enabled": "校验"
+  }
+}

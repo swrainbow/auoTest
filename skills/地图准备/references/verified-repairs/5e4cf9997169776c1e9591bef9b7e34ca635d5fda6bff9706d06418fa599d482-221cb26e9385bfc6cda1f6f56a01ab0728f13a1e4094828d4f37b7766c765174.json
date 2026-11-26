@@ -1,0 +1,43 @@
+{
+  "verificationRunId": 102,
+  "steps": [
+    {
+      "page": "/tkmap/mapDraw",
+      "operations": [
+        {
+          "type": "click",
+          "locator": {
+            "kind": "role",
+            "role": "button",
+            "name": "登 录"
+          }
+        },
+        {
+          "type": "wait-visible",
+          "locator": {
+            "kind": "css",
+            "value": ".show-circle-btn[role=\"button\"][aria-haspopup=\"menu\"][tkmapid]:not([tkmapid=\"\"])",
+            "frame": "iframe#hyjalIframe"
+          },
+          "timeoutMs": 60000
+        },
+        {
+          "type": "click",
+          "locator": {
+            "kind": "css",
+            "value": ".show-circle-btn[role=\"button\"][aria-haspopup=\"menu\"][tkmapid]:not([tkmapid=\"\"])",
+            "frame": "iframe#hyjalIframe"
+          }
+        },
+        {
+          "type": "wait-visible",
+          "locator": {
+            "kind": "css",
+            "value": ".map-dropdown-menu[role=\"menu\"]",
+            "frame": "iframe#hyjalIframe"
+          }
+        }
+      ]
+    }
+  ]
+}

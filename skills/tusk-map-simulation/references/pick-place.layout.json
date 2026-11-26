@@ -1,0 +1,25 @@
+{
+  "mapName": "取放货模拟",
+  "floor": 1,
+  "points": [
+    { "id": "A1", "type": "normal", "x": 0, "y": 0 },
+    { "id": "A2", "type": "normal", "x": 2, "y": 0 },
+    { "id": "A3", "type": "normal", "x": 4, "y": 0 },
+    { "id": "S1", "type": "storage", "x": 2, "y": 2 },
+    { "id": "S2", "type": "storage", "x": 4, "y": 2 },
+    { "id": "W1", "type": "work", "x": 4, "y": -2 },
+    { "id": "C1", "type": "charge", "x": 0, "y": -2 }
+  ],
+  "links": [
+    { "from": "A1", "to": "A2", "bidirectional": true },
+    { "from": "A2", "to": "A3", "bidirectional": true },
+    { "from": "A2", "to": "S1", "bidirectional": true },
+    { "from": "A3", "to": "S2", "bidirectional": true },
+    { "from": "A3", "to": "W1", "bidirectional": true },
+    { "from": "A1", "to": "C1", "bidirectional": true }
+  ],
+  "routes": [
+    { "from": "S1", "to": "W1" },
+    { "from": "W1", "to": "C1" }
+  ]
+}

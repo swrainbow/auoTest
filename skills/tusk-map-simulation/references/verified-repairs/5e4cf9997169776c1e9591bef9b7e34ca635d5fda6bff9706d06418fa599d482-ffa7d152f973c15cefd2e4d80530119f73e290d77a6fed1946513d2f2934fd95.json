@@ -1,0 +1,10 @@
+{
+  "verificationRunId": 105,
+  "steps": [
+    {
+      "page": "/tkmap/mapDraw",
+      "operation": "import-generated-map",
+      "guidance": "复用原步骤的地图布局。刷新回读时以地图控件中的实际 ID 等待目标详情，在已展开的地图菜单中按完整名称选取目标项。等待选图与详情监听都结束，再核对当前地图的 ID、名称和已保存内容。选图失败时保留原始操作错误。"
+    }
+  ]
+}

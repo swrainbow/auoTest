@@ -1,0 +1,12 @@
+{
+  "rules": [
+    {
+      "page": "/task/taskLego",
+      "type": "visible",
+      "from": ".el-drawer:visible .el-form-item:has(.el-form-item__label:text-is(\"容器类型\"))",
+      "to": ".el-drawer:visible:has(.el-drawer__title:text-is(\"全局配置\")) .tk-form-dynamic-item-label-text[data-field=\"containerType\"]",
+      "container": "全局配置",
+      "label": "容器类型"
+    }
+  ]
+}

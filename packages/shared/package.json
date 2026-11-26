@@ -1,0 +1,7 @@
+{
+  "name": "@autotest/shared",
+  "version": "0.1.0",
+  "private": true,
+  "description": "前后端共享类型定义（types-only）",
+  "types": "./src/index.ts"
+}

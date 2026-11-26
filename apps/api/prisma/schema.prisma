@@ -1,0 +1,143 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../../../storage/app.db"
+}
+
+model Setting {
+  key   String @id
+  value String
+}
+
+model PreparationRule {
+  version   Int               @id @default(autoincrement())
+  selection String
+  status    String            @default("draft")
+  createdAt DateTime          @default(now())
+  flows     PreparationFlow[]
+}
+
+model PreparationFlow {
+  id          String           @id @default(uuid())
+  name        String
+  steps       String
+  ruleVersion Int
+  rule        PreparationRule  @relation(fields: [ruleVersion], references: [version])
+  createdAt   DateTime         @default(now())
+  runs        PreparationRun[]
+}
+
+model PreparationRun {
+  id            String          @id @default(uuid())
+  flowId        String
+  flow          PreparationFlow @relation(fields: [flowId], references: [id])
+  targetBaseUrl String
+  mapName       String
+  serviceName   String
+  status        String          @default("queued")
+  steps         String
+  evidence      String?
+  error         String?
+  createdAt     DateTime        @default(now())
+  finishedAt    DateTime?
+
+  @@index([status, createdAt])
+}
+
+model TestCase {
+  id             Int               @id @default(autoincrement())
+  code           String            @unique
+  name           String
+  description    String            @default("")
+  originalRequirement String?
+  module         String            @default("通用")
+  tags           String            @default("")
+  priority       String            @default("P1")
+  status         String            @default("draft")
+  executionMode  String            @default("explore")
+  currentVersion Int               @default(1)
+  scriptPath     String?
+  skill          String            @default("")
+  taskId         String            @default("")
+  prerequisite   String?
+  steps          String            @default("[]")
+  zeroAiVerified Boolean           @default(false)
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  versions       TestCaseVersion[]
+  runs           TestRun[]
+  scriptGenerations ScriptGeneration[]
+}
+
+model TestCaseVersion {
+  id         Int       @id @default(autoincrement())
+  version    Int
+  steps      String
+  skill      String?
+  prerequisite String?
+  changeNote String    @default("")
+  workflow   String?
+  scriptPath String?
+  scriptHash String?
+  knowledgeHash String?
+  publishedAt DateTime?
+  cacheFingerprint String?
+  createdAt  DateTime  @default(now())
+  testCase   TestCase  @relation(fields: [testCaseId], references: [id], onDelete: Cascade)
+  testCaseId Int
+
+  @@unique([testCaseId, version])
+}
+
+model ScriptGeneration {
+  id            Int      @id @default(autoincrement())
+  testCase      TestCase @relation(fields: [testCaseId], references: [id], onDelete: Cascade)
+  testCaseId    Int
+  caseCode      String
+  caseName      String
+  sourceVersion Int
+  activeKey     String?  @unique
+  status        String   @default("queued")
+  resultVersion Int?
+  scriptPath    String?
+  error         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([testCaseId, id])
+  @@index([status, id])
+}
+
+model TestRun {
+  id          Int        @id @default(autoincrement())
+  testCase    TestCase?  @relation(fields: [testCaseId], references: [id], onDelete: SetNull)
+  testCaseId  Int?
+  target      String     @default("")
+  mode        String     @default("explore")
+  version     Int?
+  targetBaseUrl String?
+  autoRepair  Boolean    @default(false)
+  repairOf    Int?
+  repairRunId Int?
+  verificationRunId Int?
+  repairState String?
+  status      String     @default("queued")
+  exitCode    Int?
+  durationMs  Int?
+  aiCalls     Int?
+  cacheHits   Int?
+  logPath     String?
+  artifactDir String?
+  summary     String?
+  error       String?
+  diagnosis   String?
+  createdAt   DateTime   @default(now())
+  startedAt   DateTime?
+  finishedAt  DateTime?
+
+  @@index([status, createdAt])
+  @@index([testCaseId])
+}

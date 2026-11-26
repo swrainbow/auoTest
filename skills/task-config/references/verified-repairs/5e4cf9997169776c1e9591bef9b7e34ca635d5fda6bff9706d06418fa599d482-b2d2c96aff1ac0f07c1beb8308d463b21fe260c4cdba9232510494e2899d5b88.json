@@ -1,0 +1,21 @@
+{
+  "verificationRunId": 74,
+  "steps": [
+    {
+      "page": "/task/taskLego",
+      "checks": [
+        {
+          "type": "count",
+          "from": ".el-drawer:visible .vue-flow__node:has-text(\"回调\")",
+          "replacement": {
+            "type": "capture-hook-graph",
+            "node": "取货",
+            "stage": "离开后",
+            "hook": "回调",
+            "key": "hookGraphBeforeSave"
+          }
+        }
+      ]
+    }
+  ]
+}

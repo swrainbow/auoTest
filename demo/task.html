@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>任务配置演示</title>
+<style>
+  body { margin: 0; font: 16px/1.6 system-ui, sans-serif; background: #f5f7fa; color: #172337 }
+  main { max-width: 900px; margin: 48px auto; padding: 24px }
+  h1 { margin: 0 } p { color: #536075 } section { background: white; border: 1px solid #dce3ea; padding: 24px; border-radius: 10px; margin-top: 20px }
+  button, select { font: inherit; padding: 6px 12px; border: 1px solid #8293a8; border-radius: 6px; background: white; color: inherit }
+  button { cursor: pointer } button[type=submit] { background: #174e99; color: white }
+  label { display: block; margin: 12px 0 } output { display: block; margin-top: 12px; color: #176045 }
+</style>
+<main>
+  <h1>任务配置</h1>
+  <p>本地演示任务 task-e2e-001</p>
+  <section data-testid="task-graph" aria-label="任务图">
+    <button data-testid="move-002" id="node" type="button">移动节点 move-002</button>
+  </section>
+  <section data-testid="node-panel" id="panel" hidden>
+    <h2>移动节点 move-002</h2>
+    <form id="config">
+      <h3>创建时</h3>
+      <button data-testid="add-validation" id="add" type="button">添加校验 Hook</button>
+      <fieldset data-testid="validation-hook" id="hook" hidden>
+        <legend>校验 Hook</legend>
+        <label>货物状态 <select data-testid="cargo-state" id="cargo"><option value="enabled">校验</option><option value="none">不校验</option></select></label>
+        <label>锁定状态 <select data-testid="lock-state" id="lock"><option value="enabled">校验</option><option value="none">不校验</option></select></label>
+      </fieldset>
+      <p data-testid="hook-summary" id="summary" hidden></p>
+      <button data-testid="save-task" type="submit">保存任务</button>
+      <output data-testid="save-status" id="status" role="status"></output>
+    </form>
+  </section>
+</main>
+<script>
+  const element = (id) => document.getElementById(id);
+  const panel = element('panel');
+  const hook = element('hook');
+  const summary = element('summary');
+  const cargo = element('cargo');
+  const lock = element('lock');
+  const key = 'task-e2e-001.move-002';
+  const saved = JSON.parse(localStorage.getItem(key) || 'null');
+  function render() {
+    summary.hidden = hook.hidden;
+    summary.textContent = '创建时 · 校验 Hook · 货物状态 ' + cargo.selectedOptions[0].text + ' · 锁定状态 ' + lock.selectedOptions[0].text;
+  }
+  if (saved) {
+    hook.hidden = false;
+    cargo.value = saved.cargo;
+    lock.value = saved.lock;
+    render();
+  }
+  element('node').onclick = () => { panel.hidden = false; };
+  element('add').onclick = () => { hook.hidden = false; render(); };
+  element('config').onchange = render;
+  element('config').onsubmit = (event) => {
+    event.preventDefault();
+    if (!hook.hidden) localStorage.setItem(key, JSON.stringify({ cargo: cargo.value, lock: lock.value }));
+    element('status').textContent = '保存成功';
+  };
+</script>
+</html>

@@ -1,0 +1,19 @@
+node_modules/
+dist/
+apps/api/dist-dev/
+*.tsbuildinfo
+
+# 本地环境与密钥
+**/.env
+**/.env.local
+
+# 本地数据与产物
+storage/app.db*
+storage/artifacts/*
+!storage/artifacts/.gitkeep
+e2e-project/.e2e/
+e2e-project/tests/generated/
+storage/replay/
+
+# 日志
+*.log
